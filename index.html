@@ -7,10 +7,38 @@
     <title>Daily Planner</title>
     <link rel="stylesheet" href="./style.css">
     <script type="module" src="./script.js" defer></script>
+    <script src="https://kit.fontawesome.com/75b84b9f46.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
     <section id="calendar-container"></section>
-    <section id="add-task-container"></section>
+    <section id="add-task-container">
+        <h1>Add a New Task</h1>
+        <label class="custom-field">
+            <input type="text" class="input-box" id="name" autocomplete="off" required>
+            <span class="placeholder">Name</span>
+        </label>
+        <label class="custom-field">
+            <input type="text" class="input-box" id="category" autocomplete="off" required>
+            <span class="placeholder">Category</span>
+        </label>
+        <div id="time-container">
+            <label class="custom-field">
+                <input type="time" class="input-box" id="time" autocomplete="off" required>
+                <span class="placeholder">Start</span>
+            </label>
+            <p>to</p>
+            <label class="custom-field">
+                <input type="time" class="input-box" id="time" autocomplete="off" required>
+                <span class="placeholder">End</span>
+            </label>
+        </div>
+        <label class="custom-field" id="description-container">
+            <textarea class="input-box" id="description" cols="30" rows="10" required></textarea>
+            <span class="placeholder">Description</span>
+        </label>
+    </section>
     <section id="tasks-container"></section>
+    <button class="add-task"><i class="fa-solid fa-plus"></i></button>
 </body>
 </html>
