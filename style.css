@@ -1,4 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+:root{
+    --black: #222629;
+    --white: #Feffff;
+    --orange: #ff5833;
+    --gray: #6B6e70;
+    --blue: #3aafa9;
+    --lightGray: #d3d3d3;
+}
 
 *{
     padding: 0;
@@ -9,7 +17,70 @@
 body{
     font-family: 'Roboto', sans-serif;
     letter-spacing: 0.2rem;
+    overflow-y: hidden;
 }
+
+/* Calendar */
+#calendar-container{
+    position: relative;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 20%;
+    height: 10vh;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+}
+#calendar-container::before{
+    content: "\f104";
+    position: fixed;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-family: "Font Awesome 5 free";
+    font-size: 20px;
+    padding: 0 6px 0 10px;
+    height: 10vh;
+    color: var(--black);
+    background-color: rgba(107, 110, 112, 0.5);
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: none;
+    transition: 0.3s ease opacity;
+}
+#calendar-container::after {
+    content: "\f105";
+    position: fixed;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-family: "Font Awesome 5 free";
+    font-size: 20px;
+    padding: 0 10px 0 6px;
+    right: 0;
+    height: 10vh;
+    color: var(--black);
+    background-color: rgba(107, 110, 112, 0.5);
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: none;
+    transition: 0.3s ease opacity;
+}
+#calendar-container:hover::before,
+#calendar-container:hover::after{
+    opacity: 1;
+    pointer-events: all;
+}
+#calendar-container::-webkit-scrollbar{
+    display: none;
+}
+#calendar-container > *{
+    scroll-snap-align: start;
+    height: 100%;
+    text-align: center;
+}
+/* End of Calendar */
+
 /* Add a New Task Section */
 #add-task-container{
     position: absolute;
@@ -20,27 +91,127 @@ body{
     bottom: 0;
     left: 0;
     right: 0;
-    border-top-left-radius: 10%;
-    border-top-right-radius: 10%;
+    border-top-left-radius: 15%;
+    border-top-right-radius: 15%;
     padding: 20px;
     height: 70vh;
-    background-color: aqua;
+    background-color: var(--blue);
+    transform: translateY(100%);
+}
+#header1 {
+    margin: 5px 5px 10px 5px;
+    text-transform: capitalize;
+    font-size: 1.8rem;
+    color: var(--black);
 }
 /* End of Add a New Task Section */
+
+/* Tasks Container */
+#tasks-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+    height: 90vh;
+    background-color: var(--black);
+}
+#tasks-container h1{
+    padding: 10px;
+    margin: 5px;
+    color: var(--white);
+}
+.task{
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 80vw;
+    height: 10vh;
+    margin: 10px;
+    background-color: var(--gray);
+    border-radius: 7px;
+    border-right: 20px solid var(--orange);
+}
+.task .checkbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    appearance: none;
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    margin: 10px 40px 10px 20px;
+    background-color: var(--lightGray);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+.task .checkbox::after{
+    content: "\f00c";
+    font-weight: 700;
+    font-family: "Font Awesome 5 free";
+    font-size: 10px;
+    color: var(--white);
+    display: none;
+}
+.task .checkbox:checked{
+    background-color: var(--orange);
+}
+.task .checkbox:checked::after{
+    display: block;
+}
+.task label{
+    color: var(--white);
+}
+.progress-bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: var(--white);
+    width: 85vw;
+    height: 5px;
+    border-radius: 50px;
+    top: 73%;
+}
+.progress-bar::after{
+    content: "";
+    position: absolute;
+    height: 100%;
+    left: 0;
+    width: 98%;
+    background-color: var(--blue);
+    border-radius: 50px;
+    z-index: 5;
+}
+.percentage{
+    color: var(--white);
+    z-index: 10;
+}
+/* End of Tasks Container */
 
 /* Add New Task Button */
 .add-task{
     all: unset;
     position: absolute;
-    bottom: 55px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: antiquewhite;
-    padding: 18px;
-    margin: 5px;
+    background-color: var(--white);
+    padding: 17px;
     border-radius: 50%;
     cursor: pointer;
     z-index: 100;
+    background-color: var(--white);
+}
+.add-task i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: var(--orange);
 }
 /* End of Add New Task Button */
 
@@ -58,7 +229,7 @@ body{
     top: calc(50% + 10px);
     text-transform: capitalize;
     transform: translateY(-50%);
-    color: #aaa;
+    color: var(--gray);
     transition: 0.3s ease all;
     pointer-events: none;
     font-size: 0.8rem;
@@ -69,7 +240,7 @@ body{
 .custom-field .input-box:focus+.placeholder {
     top: 8px;
     font-size: 10px;
-    color: #222;
+    color: var(--black);
 }
 
 .input-box {
@@ -79,9 +250,9 @@ body{
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     background: 
-        linear-gradient(90deg, #222, #222) center bottom/0 2px no-repeat,
-        linear-gradient(90deg, #ccc, #ccc) left bottom/100% 2px no-repeat,
-        linear-gradient(90deg, #fafafa, #fafafa) left bottom/100% no-repeat;
+        linear-gradient(90deg, var(--orange), var(--orange)) center bottom/0 2px no-repeat,
+        linear-gradient(90deg, var(--gray), var(--gray)) left bottom/100% 2px no-repeat,
+        linear-gradient(90deg, var(--white), var(--white)) left bottom/100% no-repeat;
     transition: background-size 0.3s ease;
     width: 275px;
     height: 17px;
@@ -106,13 +277,17 @@ body{
     align-items: center;
     height: 30px;
     margin: 5px;
+    margin-top: 15px;
+    font-weight: 400;
+    font-size: 1rem;
+    color: var(--black);
 }
 
 #description{
     resize: vertical;
     overflow: hidden;
     min-height: 17px;
-    max-height: 100px;
+    max-height: 90px;
 }
 
 .input-box:read-only,
