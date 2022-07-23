@@ -94,6 +94,27 @@ export const getMonth = (key) => {
     return months[key]
 }
 
+export const convertTime24to12 = (time) => {
+    let ts = time;
+    const H = +ts.substr(0, 2);
+    let h = (H % 12) || 12;
+    h = (h < 10)?("0"+h):h;
+    const ampm = H < 12 ? " AM" : " PM";
+    ts = h + ts.substr(2, 3) + ampm;
+    return ts;
+}
+export const convertTime12to24 = (time12h) => {
+    const [time, modifier] = time12h.split(' ');
+    let [hours, minutes] = time.split(':');
+    if (hours === '12') {
+        hours = '00';
+    }
+    if (modifier === 'PM') {
+        hours = parseInt(hours, 10) + 12;
+    }
+    return `${hours}:${minutes}`;
+}
+
 export const sleep = (duration) => {
     return new Promise(resolve => {
         setTimeout(resolve, duration)

@@ -17,8 +17,104 @@
 body{
     font-family: 'Roboto', sans-serif;
     letter-spacing: 0.2rem;
-    overflow-y: hidden;
+    overflow: hidden;
 }
+
+/* Full Calendar */
+#full-calendar-container{
+    position: absolute;
+    z-index: 1000;
+    top: -15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    transform: scale(0);
+    pointer-events: none;
+    transition: 0.3s ease transform;
+}
+#full-calendar-container.active{
+    transform: scale(1);
+}
+.calendar{
+    width: 21.6rem;
+    height: max-content;
+    background-color: var(--black);
+    pointer-events: all;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+.this-month{
+    width: 100%;
+    height: 5.8rem;
+    background-color: var(--blue);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    text-align: center;
+}
+.this-month ion-icon{
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.this-month h1{
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+.this-month p{
+    font-size: 0.9rem;
+}
+.weekdays{
+    width: 100%;
+    height: 2.4rem;
+    padding: 0 0.4rem;
+    display: flex;
+    align-items: center;
+}
+.weekdays > *{
+    font-size: 0.9rem;
+    font-weight: 400;
+    width: calc(346px/7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+}
+.days{
+    padding: 0 10px 10px 10px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(7, calc(326px/7));
+    grid-auto-columns: calc(346px/7);
+}
+.days > *{
+    font-size: 1rem;
+    width: calc(346px/7);
+    color: var(--white);
+    height: 2.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.1s ease border;
+}
+.prev-date,
+.next-date{
+    opacity: 0.5;
+}
+.today{
+    background-color: var(--orange);
+}
+.days div:hover:not(.today):not(.selected){
+    background-color: var(--black);
+    border: 2px solid var(--gray);
+}
+.days div:hover{
+    cursor: pointer;
+}
+/* End of Full Calendar */
 
 /* Calendar */
 #calendar-container{
@@ -30,9 +126,9 @@ body{
     overflow-x: auto;
     overscroll-behavior-inline: contain;
     scroll-snap-type: inline mandatory;
+    scroll-behavior: smooth;
 }
-#calendar-container::before{
-    content: "\f104";
+#calendar-container .prev{
     position: fixed;
     display: flex;
     align-items: center;
@@ -42,14 +138,13 @@ body{
     padding: 0 6px 0 10px;
     height: 10vh;
     color: var(--black);
-    background-color: rgba(107, 110, 112, 0.5);
+    background-color: rgba(107, 110, 112, 0.1);
     opacity: 0;
     cursor: pointer;
     pointer-events: none;
     transition: 0.3s ease opacity;
 }
-#calendar-container::after {
-    content: "\f105";
+#calendar-container .next{
     position: fixed;
     display: flex;
     align-items: center;
@@ -60,16 +155,25 @@ body{
     right: 0;
     height: 10vh;
     color: var(--black);
-    background-color: rgba(107, 110, 112, 0.5);
+    background-color: rgba(107, 110, 112, 0.1);
     opacity: 0;
     cursor: pointer;
     pointer-events: none;
     transition: 0.3s ease opacity;
 }
-#calendar-container:hover::before,
-#calendar-container:hover::after{
+#calendar-container:hover .prev,
+#calendar-container:hover .next{
     opacity: 1;
     pointer-events: all;
+}
+#calendar-container .prev ion-icon,
+#calendar-container .next ion-icon{
+    transition: 0.3s ease transform;
+    pointer-events: none;
+}
+#calendar-container .prev ion-icon:hover,
+#calendar-container .next ion-icon:hover{
+    transform: scale(1.1);
 }
 #calendar-container::-webkit-scrollbar{
     display: none;
@@ -78,10 +182,23 @@ body{
     scroll-snap-align: start;
     height: 100%;
     text-align: center;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 1px 0px;
+    cursor: pointer;
+    padding-top: 10px;
+}
+.selected{
+    background-color: var(--gray);
+    color: var(--white);
+}
+#today{
+    background-color: var(--blue);
+    color: var(--white);
 }
 /* End of Calendar */
 
 /* Add a New Task Section */
+#full-task-container,
+#sort-container,
 #add-task-container{
     position: absolute;
     display: flex;
@@ -91,19 +208,274 @@ body{
     bottom: 0;
     left: 0;
     right: 0;
-    border-top-left-radius: 15%;
-    border-top-right-radius: 15%;
-    padding: 20px;
-    height: 70vh;
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+    padding: 20px 0;
     background-color: var(--blue);
+    z-index: 50;
     transform: translateY(100%);
+    transition: 0.5s ease transform;
 }
-#header1 {
+#add-task-container{
+    height: 80vh;
+}
+#add-task-container.active{
+    transform: translateY(0%);
+}
+.go-back{
+    position: absolute;
+    left: 40px;
+    bottom: 90%;
+    font-size: 2rem;
+    cursor: pointer;
+}
+.header {
     margin: 5px 5px 10px 5px;
     text-transform: capitalize;
     font-size: 1.8rem;
     color: var(--black);
 }
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(315deg, #000000 0%, #7f8c8d 74%);
+    opacity: 0;
+    z-index: 9;
+    pointer-events: none;
+    transition: 0.5s ease opacity;
+}
+#overlay.active {
+    pointer-events: all;
+    opacity: 0.7;
+}
+/* Fancy submit button */
+#submit{
+    position: relative;
+    display: inline-block;
+    padding: 10px 30px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: var(--black);
+    background-color: var(--white);
+    font-size: 1rem;
+    margin: 40px 10px 10px 10px;
+}
+#submit:hover{
+    background-color: var(--orange);
+    color: var(--white);
+    transition: 0.5s;
+    transition-delay: 1s;
+}
+#submit span{
+    position: absolute;
+    display: block;
+    background: var(--orange);
+}
+#submit span:nth-child(1){
+    left: 0;
+    bottom: 0;
+    width: 1px;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: 0.3s ease transform;
+}
+#submit:hover span:nth-child(1){
+    transform: scaleY(1);
+    transform-origin: bottom;
+}
+#submit span:nth-child(2) {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: 0.25s ease transform;
+    transition-delay: 0.25s;
+}
+#submit:hover span:nth-child(2) {
+    transform: scaleY(1);
+    transform-origin: left;
+}
+#submit span:nth-child(3) {
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    height: 100%;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: 0.25s ease transform;
+    transition-delay: 0.5s;
+}
+#submit:hover span:nth-child(3) {
+    transform: scaleY(1);
+    transform-origin: top;
+}
+#submit span:nth-child(4) {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: 0.25s ease transform;
+    transition-delay: 0.75s;
+}
+#submit:hover span:nth-child(4) {
+    transform: scaleX(1);
+    transform-origin: right;
+}
+/* End of submit button */
+/* End of add a new task section */
+
+/* Full task */
+#full-task-container{
+    height: 60vh;
+}
+#full-task-container.active{
+    transform: translateY(0);
+}
+#full-task-container .go-back{
+    position: absolute;
+    top: 25px;
+    left: 30px;
+}
+#full-task-container article {
+    text-align: start;
+    padding: 15px;
+    width: 80vw;
+}
+.priority{
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 15px;
+    padding: 5px;
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    background-color: var(--color);
+}
+#full-task-container h2{
+    position: relative;
+    margin: 0 10px 25px 0;
+    font-size: 1.4rem;
+    font-weight: 400;
+    width: 100%;
+}
+#full-task-container p{
+    padding-top: 20px;
+    margin: 10px;
+    margin-left: 0;
+    border-top: 2px solid var(--black);
+    font-weight: 400;
+    font-size: 1.4rem;
+    width: 100%;
+}
+.edit-btn{
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+/* End of Full Task */
+
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
+    overflow: visible;
+    z-index: 8;
+}
+
+.dropdown::before {
+    content: '';
+    position: absolute;
+    border: 2px solid #222;
+    border-top: 0;
+    border-right: 0;
+    transform: rotate(-45deg);
+    z-index: 2;
+    right: 20px;
+    transition: 0.5s ease;
+    pointer-events: none;
+    width: 8px;
+    height: 8px;
+    top: 35px;
+}
+
+.dropdown .options {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    overflow: hidden;
+    transform: translateY(-15px);
+    opacity: 0;
+    transition: 0.3s ease opacity, 0.5s ease transform;
+    z-index: 8;
+}
+
+.dropdown.active::before {
+    top: 38px;
+    transform: rotate(-225deg);
+}
+
+.dropdown.active>.custom-field+.options {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dropdown .options li {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s ease all;
+    padding: 6px 10px;
+    font-size: 1rem;
+}
+
+.dropdown .options li:hover {
+    background-color: var(--blue);
+    color: #f2f2f2;
+}
+
+.dropdown .options li i {
+    font-size: 0.8rem;
+}
+.highest, .high, .neutral, .low, .lowest{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+.highest{
+    background-color: red;
+}
+.high{
+    background-color: orange;
+}
+.neutral{
+    background-color: yellow;
+}
+.low{
+    background-color: green;
+}
+.lowest{
+    background-color: blue;
+}
+/* End of Dropdown */
 /* End of Add a New Task Section */
 
 /* Tasks Container */
@@ -111,16 +483,35 @@ body{
     display: flex;
     align-items: center;
     flex-direction: column;
-    position: absolute;
+    position: relative;
     bottom: 0;
     width: 100vw;
     height: 90vh;
-    background-color: var(--black);
+    background-color: var(--lightGray);
 }
-#tasks-container h1{
+#tasks-container .month{
     padding: 10px;
-    margin: 5px;
-    color: var(--white);
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--black);
+}
+#tasks-container .day{
+    text-align: center;
+    text-transform: capitalize;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--black);
+    margin-bottom: 5px;
+}
+.all-tasks{
+    max-height: 63vh;
+    min-height: 63vh;
+    padding: 0 32px;
+    overflow-y: scroll;
+}
+.all-tasks::-webkit-scrollbar{
+    display: none;
 }
 .task{
     position: relative;
@@ -130,9 +521,29 @@ body{
     width: 80vw;
     height: 10vh;
     margin: 10px;
-    background-color: var(--gray);
+    margin-bottom: 20px;
+    background-color: var(--white);
     border-radius: 7px;
-    border-right: 20px solid var(--orange);
+    border-right: 20px solid var(--color);
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+.icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: 10px;
+    /* background-color: #3aafa9; */
+}
+.icons ion-icon{
+    cursor: pointer;
+    color: var(--black);
+    transition: 0.3s ease color;
+    pointer-events: all;
+}
+.icons ion-icon:hover{
+    color: var(--orange);
 }
 .task .checkbox{
     display: flex;
@@ -162,58 +573,242 @@ body{
 .task .checkbox:checked::after{
     display: block;
 }
-.task label{
+.done{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80vw;
+    height: 10vh;
+    background-color: var(--black);
+    opacity: 0.7;
+    border-radius: 7px;
+    border-right: 20px solid ;
+    pointer-events: none;
+}
+.done::after{
+    content: "\f00c";
+    font-family: "Font Awesome 5 free";
+    font-weight: 700;
+    font-size: 70px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: var(--white);
+}
+.task div{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 10px 0;
+    height: 100%;
+}
+.task h2{
+    font-size: 1.3rem;
+    text-transform: capitalize;
+}
+.task label{
+    color: var(--black);
+    font-size: 0.9rem;
+    padding-left: 8px;
 }
 .progress-bar{
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: fixed;
     background-color: var(--white);
     width: 85vw;
     height: 5px;
     border-radius: 50px;
-    top: 73%;
+    top: 96%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 .progress-bar::after{
     content: "";
     position: absolute;
     height: 100%;
     left: 0;
-    width: 98%;
+    width: var(--progress);
     background-color: var(--blue);
     border-radius: 50px;
     z-index: 5;
+    transition: 0.3s ease width;
 }
 .percentage{
-    color: var(--white);
+    color: var(--black);
     z-index: 10;
 }
 /* End of Tasks Container */
 
-/* Add New Task Button */
-.add-task{
-    all: unset;
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--white);
-    padding: 17px;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 100;
-    background-color: var(--white);
-}
-.add-task i{
+/* Navigation Bar */
+.nav-container{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2rem;
-    color: var(--orange);
+    width: 100vw;
+    position: fixed;
+    top: 85%;
+    z-index: 100;
 }
-/* End of Add New Task Button */
+.navigation{
+    position: relative;
+    width: 250px;
+    height: 60px;
+    background-color: var(--white);
+    border-radius: 35px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.navigation ul{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+}
+.navigation ul li{
+    position: relative;
+    list-style: none;
+    width: calc(250px/4);
+    height: 60px;
+    z-index: 1;
+    cursor: pointer;
+}
+.navigation ul li a{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    font-weight: 400;
+    color: var(--black);
+    pointer-events: none;
+}
+.navigation ul li a .icon{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 60px;
+    text-align: center;
+    transition: 0.3s;
+    pointer-events: none;
+}
+.navigation ul li a .icon ion-icon{
+    font-size: 24px;
+}
+.navigation ul li.active a .icon{
+    color: var(--white);
+}
+.navigation ul li a .title::before{
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: var(--white);
+    bottom: -8px;
+    left: 48%;
+    transform: rotate(45deg) translate(-50%);
+    border-radius: 2px;
+}
+.navigation ul li a .title{
+    position: absolute;
+    top: -70px;
+    left: 50%;
+    width: max-content;
+    transform: translate(-50%, 15%);
+    background-color: var(--white);
+    padding: 5px 10px;
+    border-radius: 6px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: 0.5s;
+    opacity: 0;
+    visibility: hidden;
+}
+.navigation ul li:hover a .title{
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 50%);
+}
+.navigation ul .indicator{
+    position: absolute;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    transition: 0.3s;
+}
+.navigation ul .indicator::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--orange);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+.navigation ul li:nth-child(1).active ~ .indicator{
+    transform: translateX(calc(250px/4 * 0));
+}
+.navigation ul li:nth-child(2).active ~.indicator {
+    transform: translateX(calc(250px/4 * 1));
+}
+.navigation ul li:nth-child(3).active ~.indicator {
+    transform: translateX(calc(250px/4 * 2));
+}
+.navigation ul li:nth-child(4).active ~.indicator {
+    transform: translateX(calc(250px/4 * 3));
+}
+/* End of Navigation bar */
+
+/* Sort options window */
+#sort-container{
+    padding-top: 5px;
+    height: 40vh;
+}
+#sort-container.active{
+    transform: translateY(0);
+}
+#sort-container .go-back{
+    bottom: 86%;
+}
+.sort-options{
+    width: 100%;
+}
+.sort-options li{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    list-style: none;
+    transition: 0.3s ease background-color;
+}
+.sort-options li:hover{
+    background-color: var(--white);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.sort-options li span{
+    pointer-events: none;
+}
+.sort-options li ion-icon{
+    color: var(--orange);
+    opacity: 0;
+    transition: 0.3s ease opacity;
+    pointer-events: none;
+}
+.sort-options li.active{
+    background-color: var(--white);
+}
+.sort-options li.active ion-icon{
+    opacity: 1;
+}
+/* End of Sort options window */
 
 /* fancy styling for all input boxes */
 .custom-field {
@@ -260,7 +855,7 @@ body{
     font-size: 0.8rem;
 }
 
-#time{
+.time{
     width: 110px;
 }
 
@@ -284,10 +879,8 @@ body{
 }
 
 #description{
-    resize: vertical;
-    overflow: hidden;
     min-height: 17px;
-    max-height: 90px;
+    max-height: 150px;
 }
 
 .input-box:read-only,

@@ -7,79 +7,156 @@
     <title>Daily Planner</title>
     <link rel="stylesheet" href="./style.css">
     <script type="module" src="./script.js" defer></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://kit.fontawesome.com/75b84b9f46.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
     <section id="calendar-container">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
-        <div>7</div>
-        <div>8</div>
-        <div>9</div>
-        <div>10</div>
-        <div>11</div>
-        <div>12</div>
-        <div>13</div>
-        <div>14</div>
-        <div>15</div>
-        <div>16</div>
-        <div>17</div>
-        <div>18</div>
-        <div>19</div>
-        <div>20</div>
-        <div>21</div>
-        <div>22</div>
-        <div>23</div>
-        <div>24</div>
-        <div>25</div>
-        <div>26</div>
-        <div>27</div>
-        <div>28</div>
-        <div>29</div>
-        <div>30</div>
-        <div>31</div>
+        <div class="prev"><ion-icon name="chevron-back-outline"></ion-icon></div>
+        <div class="next"><ion-icon name="chevron-forward-outline"></ion-icon></div>
     </section>
     <section id="add-task-container">
-        <h1 id="header1">Add a New Task</h1>
+        <ion-icon name="arrow-back-circle-outline" class="go-back"></ion-icon>
+        <h1 class="header">Add a New Task</h1>
         <label class="custom-field">
             <input type="text" class="input-box" id="name" autocomplete="off" required>
             <span class="placeholder">Name</span>
         </label>
-        <label class="custom-field">
-            <input type="text" class="input-box" id="category" autocomplete="off" required>
-            <span class="placeholder">Category</span>
+        <label class="dropdown" data-dropdown>
+            <div class="custom-field">
+                <input type="text" class="input-box" id="category" autocomplete="off" data-dropdown-btn required>
+                <span class="placeholder">Category</span>
+            </div>
+            <ul class="options">
+                <li data-id="1"><div class="highest"></div><span>Highest Priority</span></li>
+                <li data-id="2"><div class="high"></div><span>High Priority</span></li>
+                <li data-id="3"><div class="neutral"></div><span>Neutral</span></li>
+                <li data-id="4"><div class="low"></div><span>Low Priority</span></li>
+                <li data-id="5"><div class="lowest"></div><span>Lowest Priority</span></li>
+            </ul>
         </label>
         <div id="time-container">
             <label class="custom-field">
-                <input type="time" class="input-box" id="time" autocomplete="off" required>
+                <input type="time" class="input-box time" id="start-time" autocomplete="off" required>
                 <span class="placeholder">Start</span>
             </label>
             <p>to</p>
             <label class="custom-field">
-                <input type="time" class="input-box" id="time" autocomplete="off" required>
+                <input type="time" class="input-box time" id="end-time" autocomplete="off" required>
                 <span class="placeholder">End</span>
             </label>
         </div>
         <label class="custom-field" id="description-container">
-            <textarea class="input-box" id="description" cols="30" rows="10" required></textarea>
+            <textarea class="input-box" id="description" required></textarea>
             <span class="placeholder">Description</span>
         </label>
+        <a href="#" id="submit">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Submit
+        </a>
     </section>
     <section id="tasks-container">
-        <h1>Todays Date</h1>
-        <div class="task">
-            <input type="checkbox" class="checkbox">
-            <label>f</label>
-        </div>
+        <article class="todays-date">
+            <h1 class="month"></h1>
+            <h2 class="day"></h2>
+        </article>
+        <article class="all-tasks"></article>
         <div class="progress-bar">
-            <div class="percentage">98</div>
+            <div class="percentage"></div>
         </div>
     </section>
-    <button class="add-task"><i class="fa-solid fa-plus"></i></button>
+    <section id="sort-container">
+        <ion-icon name="arrow-back-circle-outline" class="go-back"></ion-icon>
+        <h1 class="header">Sort Tasks</h1>
+        <ul class="sort-options">
+            <li data-id="default">
+                <span>By Adding Time</span>
+                <span><ion-icon name="checkmark-outline"></ion-icon></span>
+            </li>
+            <li data-id="by-time">
+                <span>By Time</span>
+                <span><ion-icon name="checkmark-outline"></ion-icon></span>
+            </li>
+            <li data-id="by-priority">
+                <span>By Highest Priority First</span>
+                <span><ion-icon name="checkmark-outline"></ion-icon></span>
+            </li>
+        </ul>
+    </section>
+    <section class="nav-container">
+        <nav class="navigation">
+            <ul>
+                <li id="home" class="list active-now">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li id="add-task" class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="add-outline"></ion-icon>
+                        </span>
+                        <span class="title">Add Task</span>
+                    </a>
+                </li>
+                <li id="sort" class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="swap-vertical-outline"></ion-icon>
+                        </span>
+                        <span class="title">Sort</span>
+                    </a>
+                </li>
+                <li id="calendar" class="list">
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="calendar-number-outline"></ion-icon>
+                        </span>
+                        <span class="title">Calendar</span>
+                    </a>
+                </li>
+                <div class="indicator"></div>
+            </ul>
+        </nav>
+    </section>
+    <section id="full-calendar-container">
+        <div class="calendar">
+            <article class="this-month">
+                <ion-icon class="prevMonth" name="chevron-back-outline"></ion-icon>
+                <div><h1></h1><p></p></div>
+                <ion-icon class="nextMonth" name="chevron-forward-outline"></ion-icon>
+            </article>
+            <article class="weekdays">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </article>
+            <article class="days"></article>
+        </div>
+    </section>
+    <section id="full-task-container">
+        <ion-icon name="arrow-back-circle-outline" class="go-back"></ion-icon>
+        <h1 class="header"></h1>
+        <article>
+            <h2><span id="priority"></span>
+                <div class="priority"></div>
+            </h2>
+            <h2><span id="start"></span> to <span id="end"></span></h2>
+            <p></p>
+            <ion-icon name="create-outline" class="edit-btn"></ion-icon>
+        </article>
+    </section>
+    <div id="overlay"></div>
 </body>
 </html>
