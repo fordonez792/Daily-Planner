@@ -936,7 +936,6 @@ input[type="date"]:focus::-webkit-datetime-edit {
     border-top-left-radius: 10px;
     transform: translate(100%, -50%);
     transition: 0.3s ease transform;
-    overflow: hidden;
 }
 #contact-container::before{
     content: '';
