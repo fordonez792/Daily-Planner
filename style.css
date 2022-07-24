@@ -212,7 +212,7 @@ body{
     padding: 20px 0;
     background-color: var(--blue);
     z-index: 50;
-    transform: translateY(100%);
+    transform: translateY(200%);
     transition: 0.5s ease transform;
 }
 #add-task-container{
@@ -338,7 +338,6 @@ body{
 /* Full task */
 #full-task-container{
     height: 60vh;
-    transform: translateY(200%);
 }
 #full-task-container.active{
     transform: translateY(0);
