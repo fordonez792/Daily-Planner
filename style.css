@@ -338,6 +338,7 @@ body{
 /* Full task */
 #full-task-container{
     height: 60vh;
+    transform: translateY(100%);
 }
 #full-task-container.active{
     transform: translateY(0);
