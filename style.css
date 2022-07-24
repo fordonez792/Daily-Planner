@@ -338,7 +338,7 @@ body{
 /* Full task */
 #full-task-container{
     height: 60vh;
-    transform: translateY(100%);
+    transform: translateY(200%);
 }
 #full-task-container.active{
     transform: translateY(0);
@@ -930,6 +930,7 @@ input[type="date"]:focus::-webkit-datetime-edit {
     border-top-left-radius: 10px;
     transform: translate(100%, -50%);
     transition: 0.3s ease transform;
+    overflow: hidden;
 }
 #contact-container::before{
     content: '';
