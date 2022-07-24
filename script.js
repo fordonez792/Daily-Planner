@@ -270,6 +270,7 @@ resetBtn.addEventListener('click', () => {
     startTime.value=''
     endTime.value=''
     description.value=''
+    previouslyEditing=false
 })
 
 const createTask = (id, values) => {
