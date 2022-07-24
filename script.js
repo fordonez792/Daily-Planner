@@ -3,6 +3,7 @@ import { log, qs, qsa, createElement, getMonth, sleep, sanitizeInput, convertTim
 // Query Selectors
 const homeBtn=qs('#home')
 const fullTaskContainer=qs('#full-task-container')
+const contact=qs('#contact-container')
 const sortOptions=qsa('.sort-options li')
 const allBtns=qsa('.list')
 const tasksContainer=qs('#tasks-container')
@@ -18,6 +19,7 @@ const date=new Date()
 // Submit new task
 const allTasks=qs('.all-tasks')
 const submitBtn=qs('#submit')
+const resetBtn=qs('#reset')
 const name=qs('#name')
 const category=qs('#category')
 const startTime=qs('#start-time')
@@ -28,15 +30,18 @@ let previouslyOnHome=true
 let previouslyEditing=false
 let toEdit
 let desktop
+let hoveringContactInfo=true
 
+// Checking if window has been resized to desktop size
 window.addEventListener('resize', () => {
+    const selected=qsa('*', calendar).find(item => item.classList.contains('selected')) || qs('#today')
+    selected.scrollIntoView({ behavior: "auto", inline: "center" })
     if(window.innerWidth>1200){
+        clearWindows()
         desktop=true
-        log(desktop)
         return
     }
     desktop=false
-    log(desktop)
 })
 
 // Loading window
@@ -70,6 +75,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     homeBtn.classList.add('active')
     updateProgressBar()
+    if(window.innerWidth>1200){
+        desktop=true
+        return
+    }
+    desktop=false
 })
 
 calendar.addEventListener('click', e => {
@@ -125,7 +135,7 @@ fullCalendar.addEventListener('click', e => {
     const days=qsa('div', daysContainer)
     const current=e.target
     const selectedDate=new Date()
-    
+
     const month=date.getMonth()
     const currentMonth=new Date().getMonth()
     if(month!=currentMonth) return
@@ -254,6 +264,14 @@ submitBtn.addEventListener('click', () => {
     previouslyOnHome=true
 })
 
+resetBtn.addEventListener('click', () => {
+    name.value=''
+    category.value=''
+    startTime.value=''
+    endTime.value=''
+    description.value=''
+})
+
 const createTask = (id, values) => {
     const div=createElement('div', {class: 'task', dataset: {done: 'no', id: id}})
     div.innerHTML=`<input type="checkbox" class="checkbox">
@@ -349,7 +367,8 @@ const createTask = (id, values) => {
 
         editBtn.addEventListener('click', () => {
             clearWindows()
-            if(desktop!=null){
+            if(!desktop){
+                log(desktop)
                 sleep(200).then(() => {
                     openWindow(addTaskContainer)
                 })
@@ -481,6 +500,22 @@ nav.addEventListener('click', e => {
         }
         previouslyOnHome=false
     }
+})
+// Checks if mouse is hovering the contact information or not
+contact.addEventListener('mouseleave', () => {
+    hoveringContactInfo=false
+    contact.classList.remove('active')
+})
+contact.addEventListener('mouseover', () => {
+    hoveringContactInfo=true
+})
+// Activates the contact info window once it reaches farthest right around the middle
+document.addEventListener('mousemove', e => {
+    if((e.clientX===(window.innerWidth-1) && e.clientY<500 && e.clientY>275) ||hoveringContactInfo){
+        contact.classList.add('active')
+        return
+    }
+    contact.classList.remove('active')
 })
 
 // Reveals dropdown menu

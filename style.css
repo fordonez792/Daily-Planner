@@ -108,7 +108,6 @@ body{
     background-color: var(--orange);
 }
 .days div:hover:not(.today):not(.selected){
-    background-color: var(--black);
     border: 2px solid var(--gray);
 }
 .days div:hover{
@@ -256,7 +255,7 @@ body{
     opacity: 0.7;
 }
 /* Fancy submit button */
-#submit{
+.btn{
     position: relative;
     display: inline-block;
     padding: 10px 30px;
@@ -267,18 +266,18 @@ body{
     font-size: 1rem;
     margin: 40px 10px 10px 10px;
 }
-#submit:hover{
+.btn:hover{
     background-color: var(--orange);
     color: var(--white);
     transition: 0.5s;
     transition-delay: 1s;
 }
-#submit span{
+.btn span{
     position: absolute;
     display: block;
     background: var(--orange);
 }
-#submit span:nth-child(1){
+.btn span:nth-child(1){
     left: 0;
     bottom: 0;
     width: 1px;
@@ -287,11 +286,11 @@ body{
     transform-origin: top;
     transition: 0.3s ease transform;
 }
-#submit:hover span:nth-child(1){
+.btn:hover span:nth-child(1){
     transform: scaleY(1);
     transform-origin: bottom;
 }
-#submit span:nth-child(2) {
+.btn span:nth-child(2) {
     left: 0;
     top: 0;
     width: 100%;
@@ -301,11 +300,11 @@ body{
     transition: 0.25s ease transform;
     transition-delay: 0.25s;
 }
-#submit:hover span:nth-child(2) {
+.btn:hover span:nth-child(2) {
     transform: scaleY(1);
     transform-origin: left;
 }
-#submit span:nth-child(3) {
+.btn span:nth-child(3) {
     right: 0;
     bottom: 0;
     width: 1px;
@@ -315,11 +314,11 @@ body{
     transition: 0.25s ease transform;
     transition-delay: 0.5s;
 }
-#submit:hover span:nth-child(3) {
+.btn:hover span:nth-child(3) {
     transform: scaleY(1);
     transform-origin: top;
 }
-#submit span:nth-child(4) {
+.btn span:nth-child(4) {
     left: 0;
     bottom: 0;
     width: 100%;
@@ -329,7 +328,7 @@ body{
     transition: 0.25s ease transform;
     transition-delay: 0.75s;
 }
-#submit:hover span:nth-child(4) {
+.btn:hover span:nth-child(4) {
     transform: scaleX(1);
     transform-origin: right;
 }
@@ -913,6 +912,53 @@ input[type="date"]:focus::-webkit-datetime-edit {
 }
 /* End of Division Boxes */
 
+/* Contact Info */
+#contact-container{
+    position: absolute;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    top: 50%;
+    right: 0;
+    padding-left: 5px;
+    width: max-content;
+    height: 225px;
+    background-color: var(--white);
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    transform: translate(100%, -50%);
+    transition: 0.3s ease transform;
+}
+#contact-container::before{
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-color: var(--white);
+    left: 0;
+    top: 50%;
+    transform: rotate(45deg) translate(-50%);
+    border-radius: 2px;
+    transition: 0.3s ease left;
+}
+#contact-container.active{
+    transform: translate(0, -50%);
+}
+#contact-container.active::before{
+    left: 20px;
+}
+.social-item img{
+    height: 40px;
+    width: 40px;
+    filter: grayscale(1);
+    transition: 0.3s ease filter;
+}
+.social-item img:hover{
+    filter: grayscale(0);
+}
+/* End of Contact Info */
+
 /* Media Queries */
 /* Media Query for tablet */
 @media only screen and (min-width: 768px){
@@ -1127,7 +1173,7 @@ input[type="date"]:focus::-webkit-datetime-edit {
     /* End of Sort options window */
 
     /* Submit Button */
-    #submit {
+    .btn {
         margin: 25px 10px 10px 10px;
     }
     /* End of Submit Button */
@@ -1194,9 +1240,6 @@ input[type="date"]:focus::-webkit-datetime-edit {
         font-size: 0.85rem;
         width: calc((346px*0.85)/7);
         height: calc(2.75rem*0.85);
-    }
-    .days>*:hover{
-        color: var(--white);
     }
     .selected,
     .today{
@@ -1352,5 +1395,15 @@ input[type="date"]:focus::-webkit-datetime-edit {
         right: 0;
     }
     /* End of Division Boxes */
+
+    /* Contact Container */
+    #contact-container{
+        transform: translate(100%, -50%);
+        z-index: 2;
+    }
+    #contact-container.active{
+        transform: translate(0, -50%);
+    }
+    /* End of Contact Container */
 }
 /* End of Media Queries */
