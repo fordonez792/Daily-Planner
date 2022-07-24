@@ -873,6 +873,13 @@ body{
     flex-direction: row;
 }
 
+#start-time, 
+#end-time{
+    min-width: 117px;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+}
+
 #time-container p{
     display: flex;
     justify-content: center;
