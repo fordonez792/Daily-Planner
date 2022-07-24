@@ -935,27 +935,8 @@ input[type="date"]:focus::-webkit-datetime-edit {
     background-color: var(--white);
     border-bottom-left-radius: 10px;
     border-top-left-radius: 10px;
-    transform: translate(100%, -50%);
-    transition: 0.3s ease transform;
-}
-#contact-container::before{
-    content: '';
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-color: var(--white);
-    left: 0;
-    top: 50%;
-    transform: rotate(45deg) translate(-50%);
-    border-radius: 2px;
-    transition: 0.3s ease left, 0.3s ease background-color;
-}
-#contact-container.active{
     transform: translate(0, -50%);
-}
-#contact-container.active::before{
-    left: 20px;
-    background-color: transparent;
+    transition: 0.3s ease transform;
 }
 .social-item img{
     height: 40px;
@@ -1063,6 +1044,10 @@ input[type="date"]:focus::-webkit-datetime-edit {
     #tasks-container .day {
         font-size: calc(1.2rem*1.1);
         margin-bottom: 6px;
+    }
+    .all-tasks{
+        min-height: 57vh;
+        max-height: 57vh;
     }
     .task {
         width: 65vw;
@@ -1414,6 +1399,22 @@ input[type="date"]:focus::-webkit-datetime-edit {
     }   
     .social-item img:hover{
         filter: grayscale(0);
+    }
+    #contact-container::before{
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: var(--white);
+        left: 0;
+        top: 50%;
+        transform: rotate(45deg) translate(-50%);
+        border-radius: 2px;
+        transition: 0.3s ease left, 0.3s ease background-color;
+    }
+    #contact-container.active::before{
+        left: 20px;
+        background-color: transparent;
     }
     /* End of Contact Container */
 }
