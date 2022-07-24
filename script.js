@@ -571,6 +571,8 @@ sortList.addEventListener('click', e => {
 // Helper function that determines the type of sort to complete
 const selectSort = (id) => {
     // Collect tasks, filter and convert into array
+    clearWindows()
+    clearNavBtns()
     let tasksTemp=qsa('*', allTasks)
     tasksTemp=tasksTemp.filter(item => {
         if(item.classList.contains('task')) return item
@@ -594,8 +596,6 @@ const selectSort = (id) => {
             allTasks.appendChild(tasksArray[i])
         }
     }
-    clearWindows()
-    clearNavBtns()
 }
 
 // Function to sort by adding time, default sort

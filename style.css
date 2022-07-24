@@ -223,7 +223,7 @@ body{
 }
 .go-back{
     position: absolute;
-    left: 40px;
+    left: 30px;
     bottom: 90%;
     font-size: 2rem;
     cursor: pointer;
@@ -613,12 +613,12 @@ body{
     height: 100%;
 }
 .task h2{
-    font-size: 1.3rem;
+    font-size: 1rem;
     text-transform: capitalize;
 }
 .task label{
     color: var(--black);
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     padding-left: 8px;
 }
 .progress-bar{
@@ -948,22 +948,18 @@ input[type="date"]:focus::-webkit-datetime-edit {
     top: 50%;
     transform: rotate(45deg) translate(-50%);
     border-radius: 2px;
-    transition: 0.3s ease left;
+    transition: 0.3s ease left, 0.3s ease background-color;
 }
 #contact-container.active{
     transform: translate(0, -50%);
 }
 #contact-container.active::before{
     left: 20px;
+    background-color: transparent;
 }
 .social-item img{
     height: 40px;
     width: 40px;
-    filter: grayscale(1);
-    transition: 0.3s ease filter;
-}
-.social-item img:hover{
-    filter: grayscale(0);
 }
 /* End of Contact Info */
 
@@ -1411,6 +1407,13 @@ input[type="date"]:focus::-webkit-datetime-edit {
     }
     #contact-container.active{
         transform: translate(0, -50%);
+    }
+    .social-item img{
+        filter: grayscale(1);
+        transition: 0.3s ease filter;
+    }   
+    .social-item img:hover{
+        filter: grayscale(0);
     }
     /* End of Contact Container */
 }
