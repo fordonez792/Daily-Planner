@@ -37,7 +37,7 @@ body{
 #full-calendar-container.active{
     transform: scale(1);
 }
-.calendar{
+.calendar{ 
     width: 21.6rem;
     height: max-content;
     background-color: var(--black);
@@ -116,7 +116,7 @@ body{
 }
 /* End of Full Calendar */
 
-/* Calendar */
+/* Top Calendar */
 #calendar-container{
     position: relative;
     display: grid;
@@ -191,10 +191,10 @@ body{
     color: var(--white);
 }
 #today{
-    background-color: var(--blue);
+    background-color: var(--orange);
     color: var(--white);
 }
-/* End of Calendar */
+/* End of Top Calendar */
 
 /* Add a New Task Section */
 #full-task-container,
@@ -228,6 +228,10 @@ body{
     bottom: 90%;
     font-size: 2rem;
     cursor: pointer;
+    transition: 0.3s ease color;
+}
+.go-back:hover{
+    color: var(--white);
 }
 .header {
     margin: 5px 5px 10px 5px;
@@ -372,7 +376,7 @@ body{
     padding-top: 20px;
     margin: 10px;
     margin-left: 0;
-    border-top: 2px solid var(--black);
+    border-top: 2px solid var(--white);
     font-weight: 400;
     font-size: 1.4rem;
     width: 100%;
@@ -383,6 +387,10 @@ body{
     right: 30px;
     font-size: 1.5rem;
     cursor: pointer;
+    transition: 0.3s ease color;
+}
+.edit-btn:hover{
+    color: var(--white);
 }
 /* End of Full Task */
 
@@ -534,7 +542,6 @@ body{
     flex-direction: row;
     margin-left: auto;
     margin-right: 10px;
-    /* background-color: #3aafa9; */
 }
 .icons ion-icon{
     cursor: pointer;
@@ -788,6 +795,7 @@ body{
     padding: 10px 30px;
     list-style: none;
     transition: 0.3s ease background-color;
+    cursor: pointer;
 }
 .sort-options li:hover{
     background-color: var(--white);
@@ -849,14 +857,14 @@ body{
         linear-gradient(90deg, var(--gray), var(--gray)) left bottom/100% 2px no-repeat,
         linear-gradient(90deg, var(--white), var(--white)) left bottom/100% no-repeat;
     transition: background-size 0.3s ease;
-    width: 275px;
+    width: 290px;
     height: 17px;
     padding: 12px;
     font-size: 0.8rem;
 }
 
 .time{
-    width: 110px;
+    width: 117px;
 }
 
 #time-container{
@@ -897,3 +905,452 @@ input[type="date"]:focus::-webkit-datetime-edit {
     color: black !important;
 }
 /* end of fancy styling for input boxes */
+
+/* Division Boxes */
+#left,
+#right{
+    display: none;
+}
+/* End of Division Boxes */
+
+/* Media Queries */
+/* Media Query for tablet */
+@media only screen and (min-width: 768px){
+    /* Full Calendar */
+    .calendar {
+            width: calc(21.6rem*1.1);
+    }
+    .this-month {
+        height: calc(5.8rem*1.1);
+    }
+    .this-month ion-icon {
+        font-size: calc(1.2rem*1.1);
+    }
+    .this-month h1 {
+        font-size: calc(1.5rem*1.1);
+    }
+    .this-month p {
+        font-size: calc(0.9rem*1.1);
+    }
+    .weekdays {
+        height: calc(2.4rem*1.1);
+    }
+    .weekdays>* {
+        font-size: calc(0.9rem*1.1);
+        width: calc((346px*1.1)/7);
+    }
+    .days {
+        grid-template-columns: repeat(7, calc((326px*1.1)/7));
+        grid-auto-columns: calc((346px*1.1)/7);
+    }
+    .days>* {
+        font-size: 1.1rem;
+        width: calc((346px*1.1)/7);
+        height: calc(2.75rem*1.1);
+    }
+    /* End of Full Calendar */
+
+    /* Top Calendar */
+    #calendar-container .next,
+    #calendar-container .prev{
+        font-size: 22px;
+    }
+    /* End of Top Calendar */
+
+    /* Add A New Task Screen */
+    #full-task-container,
+    #sort-container,
+    #add-task-container {
+        width: 55vw;
+        top: 50%;
+        left: 50%;
+        border-radius: 60px;
+    }
+    #add-task-container {
+        height: 60vh;
+        transform: translate(-50%, 100%);
+    }
+    #add-task-container.active{
+        transform: translate(-50%, -60%);
+    }
+    .go-back {
+        left: 25px;
+        top: 25px;
+    }
+    /* End of New Task Screen */
+
+    /* Full Task */
+    #full-task-container {
+        height: max-content;
+        transform: translate(-50%, 200%);
+    }
+    #full-task-container.active {
+        transform: translate(-50%, -60%);
+    }
+    #full-task-container article {
+        width: 50vw;
+    }
+    #full-task-container article h2{
+        text-align: center;
+    }
+    #full-task-container article p{
+        width: 45vw;
+        padding-left: 10px;
+    }
+    /* End of Full Task */
+
+    /* Dropdown */
+    .dropdown .options li {
+        font-size: 1.1rem;
+    }
+    /* End of Dropdown */
+
+    /* Task Container */
+    #tasks-container .month {
+        padding: 12px;
+        font-size: calc(1.8rem*1.1);
+    }
+    #tasks-container .day {
+        font-size: calc(1.2rem*1.1);
+        margin-bottom: 6px;
+    }
+    .task {
+        width: 65vw;
+        height: 11vh;
+        margin: 11px;
+        margin-bottom: 17px;
+        border-radius: 7px;
+        border-right: 22px solid var(--color);
+    }
+    .icons {
+        margin-right: 15px;
+    }
+    .icons ion-icon {
+        font-size: 1.2em;
+    }
+    .task .checkbox {
+        height: 17px;
+        width: 17px;
+    }
+    .task .checkbox::after {
+        font-size: 12px;
+    }
+    .done {
+        width: 65vw;
+        border-right: 22px solid;
+    }
+    .done::after {
+        font-size: 80px;
+    }
+    .task h2 {
+        font-size: calc(1.3rem*1.1);
+    }
+    .task label {
+        font-size: calc(0.9rem*1.1);
+    }
+    .progress-bar {
+        height: 7px;
+        top: 94%;
+    }
+    .percentage {
+        font-size: 1.1rem;
+    }
+    /* End of Task Container */
+
+    /* Navigation Bar */
+    .nav-container {
+        top: 82%;
+    }
+    .navigation {
+        width: calc(250px*1.1);
+        height: calc(60px*1.1);
+    }
+    .navigation ul li {
+        width: calc((250px*1.1)/4);
+        height: calc(60px*1.1);
+    }
+    .navigation ul li a {
+        height: calc(60px*1.1);
+    }
+    .navigation ul li a .icon {
+        line-height: calc(60px*1.1);
+    }
+    .navigation ul li a .icon ion-icon {
+        font-size: calc(24px*1.1);
+    }
+    .navigation ul .indicator {
+        width: calc(60px*1.1);
+        height: calc(60px*1.1);
+    }
+    .navigation ul .indicator::before {
+        width: calc(45px*1.1);
+        height: calc(45px*1.1);
+    }
+    .navigation ul li:nth-child(1).active~.indicator {
+        transform: translateX(calc((250px*1.1)/4 * 0));
+    }
+    .navigation ul li:nth-child(2).active~.indicator {
+        transform: translateX(calc((250px*1.1)/4 * 1));
+    }
+    .navigation ul li:nth-child(3).active~.indicator {
+        transform: translateX(calc((250px*1.1)/4 * 2));
+    }
+    .navigation ul li:nth-child(4).active~.indicator {
+        transform: translateX(calc((250px*1.1)/4 * 3));
+    }
+    /* End of Navigation Bar */
+
+    /* Sort options window */
+    #sort-container {
+        padding-top: 5px;
+        height: 31vh;
+        width: 47vw;
+        transform: translate(-50%, 200%);
+        overflow: hidden;
+    }
+    #sort-container.active {
+        transform: translate(-50%, -60%);
+    }
+    #sort-container .go-back {
+        top: 25px;
+        left: 25px;
+    }
+    #sort-container .header{
+        margin-top: 14px;
+    }
+    .sort-options li span {
+        font-size: 1.05rem;
+    }
+    .sort-options li ion-icon {
+        font-size: 1.3rem;
+    }
+    /* End of Sort options window */
+
+    /* Submit Button */
+    #submit {
+        margin: 25px 10px 10px 10px;
+    }
+    /* End of Submit Button */
+
+    /* fancy styling for all input boxes */
+    .custom-field {
+        font-size: 0.8rem;
+        padding-top: 22px;
+    }
+    .custom-field .input-box:read-only+.placeholder,
+    .custom-field .input-box:valid+.placeholder,
+    .custom-field .input-box:focus+.placeholder {
+        font-size: 12px;
+    }
+    /* end of fancy styling for input boxes */
+}
+/* Media Query for Desktop */
+@media only screen and (min-width: 1200px) and (min-height: 750px){
+
+    /* Full Calendar */
+    #full-calendar-container{
+        top: -14%;
+        transform: scale(1);
+        z-index: 2;
+    }
+    .calendar {
+        position: absolute;
+        right: calc(100vw/7);
+        transform: translateX(50%);
+        width: calc(21.6rem*0.85);
+        height: 350px;
+        box-shadow: none;
+        background-color: transparent;
+        padding-bottom: 10px;
+        border-bottom: 3px solid var(--white);
+    }
+    .this-month {
+        background-color: transparent;
+        height: calc(5.8rem*0.85);
+    }
+    .this-month ion-icon {
+        font-size: calc(1.2rem*0.85);
+    }
+    .this-month h1 {
+        font-size: calc(1.5rem*0.85);
+    }
+    .this-month p {
+        font-size: calc(0.9rem*0.85);
+    }
+    .weekdays {
+        height: calc(2.4rem*0.85);
+    }
+    .weekdays>* {
+        color: var(--black);
+        font-size: calc(0.9rem*0.85);
+        width: calc((346px*0.85)/7);
+    }
+    .days {
+        grid-template-columns: repeat(7, calc((326px*0.85)/7));
+        grid-auto-columns: calc((346px*0.85)/7);
+    }
+    .days>* {
+        color: var(--black);
+        font-size: 0.85rem;
+        width: calc((346px*0.85)/7);
+        height: calc(2.75rem*0.85);
+    }
+    .days>*:hover{
+        color: var(--white);
+    }
+    .selected,
+    .today{
+        color: var(--white);
+    }
+    .prev-date,
+    .next-date{
+        opacity: 0.65;
+    }
+    /* End of Full Calendar */
+
+    /* Top Calendar */
+    #calendar-container{
+        grid-auto-columns: calc(100%/7);
+    }
+    #calendar-container .prev{
+        font-size: 27px;
+        padding: 0 9px 0 15px;
+    }
+    #calendar-container .next{
+        font-size: 27px;
+        padding: 0 15px 0 9px;
+    }
+    /* End of Top Calendar */
+
+    /* Task Container */
+    #tasks-container .todays-date{
+        position: absolute;
+        left: calc(100vw/7);
+        transform: translateX(-50%);
+        top: 3%;
+        width: 350px;
+        padding-bottom: 7px;
+        border-bottom: 3px solid var(--white);
+        z-index: 2;
+    }
+    #tasks-container .all-tasks{
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        min-height: 580px;
+        max-height: 580px;
+    }
+    #tasks-container .month {
+        font-size: calc(1.8rem*1.4);
+    }
+    #tasks-container .day {
+        font-size: calc(1.2rem*1.5);
+        margin-bottom: 6px;
+    }
+    .task {
+        width: 30vw;
+    }
+    .done {
+        width: 30vw;
+    }
+    .progress-bar {
+        width: 35vw;
+        top: 93%;
+    }
+    /* End of Task Container */
+
+    /* Add a New Task Section */
+    #add-task-container{
+        width: 25vw;
+        height: 50vh;
+        top: 30%;
+        left: calc(100vw/7);
+        border-radius: 0;
+        padding: 0;
+        background-color: transparent;
+        transform: translateY(0);
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+    #add-task-container .go-back{
+        display: none;
+    }
+    .header {
+        margin: 5px;
+        font-size: 1.3rem;
+    }
+    /* End of Add New Task Section */
+
+    /* Navigation Bar */
+    .nav-container {
+        display: none;
+    }
+    /* End of Navigation Bar */
+
+    /* Sort Window */
+    #sort-container{
+        width: calc(21.6rem*0.85);
+        height: max-content;
+        top: 62%;
+        left: calc(100vw/7*6);
+        border-radius: 0;
+        padding: 0;
+        background-color: transparent;
+        transform: translateY(0);
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+    #sort-container .go-back{
+        display: none;
+    }
+    #sort-container .header{
+        font-size: 1.3rem;
+    }
+    .sort-options li{
+        padding: 10px;
+    }
+    .sort-options li span{
+        font-size: 0.9rem;
+    }
+    /* End of Sort Window */
+
+    /* Full task */
+    #full-task-container{
+        width: 30vw;
+        transform: translate(-50%, 250%)
+    }
+    #full-task-container article {
+        width: 100%;
+    }
+    #full-task-container .header{
+        font-size: 2rem;
+    }
+    #full-task-container article p{
+        font-size: 1.2rem;
+        width: 100%;
+    }
+    /* End of Full Task */
+
+    /* Division Boxes */
+    #left,
+    #right{
+        display: block;
+        position: absolute;
+        background-color: rgba(220, 220, 220, 1);
+        bottom: 0;
+        height: 90vh;
+        z-index: 1;
+        pointer-events: none;
+    }
+    #left{
+        left: 0;
+        right: calc(100vw/7*5);
+    }
+    #right{
+        left: calc(100vw/7*5);
+        right: 0;
+    }
+    /* End of Division Boxes */
+}
+/* End of Media Queries */

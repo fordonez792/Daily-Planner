@@ -27,6 +27,17 @@ const description=qs('#description')
 let previouslyOnHome=true
 let previouslyEditing=false
 let toEdit
+let desktop
+
+window.addEventListener('resize', () => {
+    if(window.innerWidth>1200){
+        desktop=true
+        log(desktop)
+        return
+    }
+    desktop=false
+    log(desktop)
+})
 
 // Loading window
 window.addEventListener('DOMContentLoaded', () => {
@@ -114,6 +125,10 @@ fullCalendar.addEventListener('click', e => {
     const days=qsa('div', daysContainer)
     const current=e.target
     const selectedDate=new Date()
+    
+    const month=date.getMonth()
+    const currentMonth=new Date().getMonth()
+    if(month!=currentMonth) return
     // Selects the same day in the top calendar as the one selected in the full calendar
     const selected=topCalendarDays.find(item => {
         if(item.textContent===current.textContent) return item
@@ -325,7 +340,7 @@ const createTask = (id, values) => {
 
         start.textContent=data[2]
         end.textContent=data[3]
-        if(values[4]){
+        if(data[4]){
             p.textContent=data[4]
         }
         overlay.classList.add('active')
@@ -334,10 +349,12 @@ const createTask = (id, values) => {
 
         editBtn.addEventListener('click', () => {
             clearWindows()
-            sleep(200).then(() => {
-                openWindow(addTaskContainer)
-            })
-            clearNavBtns(qs('#add-task'))
+            if(desktop!=null){
+                sleep(200).then(() => {
+                    openWindow(addTaskContainer)
+                })
+                clearNavBtns(qs('#add-task'))
+            }
             name.value=data[0]
             category.value=data[1]
             startTime.value=convertTime12to24(data[2])
