@@ -1389,7 +1389,7 @@ input[type="date"]:focus::-webkit-datetime-edit {
     #contact-container{
         transform: translate(100%, -50%);
         z-index: 2;
-        width: 225px;
+        height: 225px;
     }
     #contact-container.active{
         transform: translate(0, -50%);
