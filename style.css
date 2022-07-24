@@ -495,6 +495,7 @@ body{
     width: 100vw;
     height: 90vh;
     background-color: var(--lightGray);
+    overflow: hidden;
 }
 #tasks-container .month{
     padding: 10px;
