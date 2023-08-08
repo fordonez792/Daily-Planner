@@ -1,3 +1,6 @@
+# Website Link
+https://fernando-daily-planner.netlify.app
+
 # Daily-Planner
 
 With the the use of HTML, CSS and JavaScript, created a planner, where users can track their daily activities, set estimated time to be completed, as well as a setting a priority. It allows users to mark tasks as done or delete them. Users can further set tasks for future days with the use of the calendar.
